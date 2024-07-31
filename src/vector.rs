@@ -51,6 +51,13 @@ where
     pub fn scl(&mut self, a: K) {
         self.values.iter_mut().for_each(|x| *x = *x * a);
     }
+
+    fn dot(&self, v: &Vector::<K>) -> K {
+        if self.values.len() != v.values.len() {
+            panic!("Vectors must be the same length");
+        }
+        self.values.iter().zip(v.values.iter()).fold(K::zero(), |acc, (x, y)| acc + *x * *y)
+    }
 }
 
 #[cfg(test)]
@@ -109,4 +116,51 @@ mod tests {
         let v2 = Vector { values: vec![1, 2] };
         v.sub(&v2);
     }
+
+    #[test]
+    #[should_panic]
+    fn dot_panics_if_vectors_are_not_same_length() {
+        let v = Vector {
+            values: vec![1, 2, 3],
+        };
+        let v2 = Vector { values: vec![1, 2] };
+        v.dot(&v2);
+    }
+
+    #[test]
+    fn dot_product_returns_dot_product() {
+        let v = Vector {
+            values: vec![0., 0.],
+        };
+        let v2 = Vector {
+            values: vec![1., 1.],
+        };
+        
+        assert_eq!(v.dot(&v2), 0.);
+    }
+
+    #[test]
+    fn dot_product_returns_dot_product_2() {
+        let v = Vector {
+            values: vec![1., 1.],
+        };
+        let v2 = Vector {
+            values: vec![1., 1.],
+        };
+        
+        assert_eq!(v.dot(&v2), 2.);
+    }
+
+    #[test]
+    fn dot_product_returns_dot_product_3() {
+        let v = Vector {
+            values: vec![-1., 6.],
+        };
+        let v2 = Vector {
+            values: vec![3., 2.],
+        };
+        
+        assert_eq!(v.dot(&v2), 9.);
+    }
+
 }

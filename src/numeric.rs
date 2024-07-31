@@ -1,3 +1,5 @@
+use num::Zero;
+
 pub trait Numeric:
     std::ops::Sub<Output = Self>
     + std::ops::Add<Output = Self>
@@ -5,6 +7,7 @@ pub trait Numeric:
     + Default
     + PartialEq
     + Copy
+    + Zero
 {
 }
 
@@ -14,6 +17,7 @@ impl<T> Numeric for T where
         + std::ops::Mul<Output = Self>
         + Default
         + PartialEq
+        + Zero
         + Copy
 {
 }
