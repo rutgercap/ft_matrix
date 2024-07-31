@@ -1,6 +1,7 @@
 use vector::Vector;
 
 pub mod linear_combinations;
+pub mod norm;
 pub mod linear_interpolation;
 pub mod matrix;
 pub mod numeric;
