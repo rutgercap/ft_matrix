@@ -1,7 +1,13 @@
 
 #[derive(Clone, Debug, PartialEq)]
-pub struct Vector<K: std::ops::Mul<Output= K>> {
+pub struct Vector<K> {
     pub values: Vec<K>,
+}
+
+impl<K: Clone> Vector<K> {
+    pub fn from(values: &[K]) -> Self {
+        Vector { values: Vec::from(values) }
+    }
 }
 
 impl<K> Vector<K>

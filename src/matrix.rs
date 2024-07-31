@@ -3,6 +3,13 @@ pub struct Matrix<K> {
     pub values: Vec<Vec<K>>,
 }
 
+impl<K: Clone> Matrix<K> {
+    pub fn from(values: &[&[K]]) -> Self {
+        let matrix_values: Vec<Vec<K>> = values.iter().map(|row| row.to_vec()).collect();
+        Matrix { values: matrix_values }
+    }
+}
+
 impl<K> Matrix<K>
 where
     K: std::ops::Sub<Output = K>
