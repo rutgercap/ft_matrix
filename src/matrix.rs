@@ -12,6 +12,10 @@ impl<K: Numeric> Matrix<K> {
             values: matrix_values,
         }
     }
+
+    pub fn is_square(&self) -> bool {
+        self.values.len() == self.values[0].len()
+    }
 }
 
 impl<K> Matrix<K>
