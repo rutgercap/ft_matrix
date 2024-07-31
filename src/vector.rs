@@ -52,7 +52,7 @@ where
         self.values.iter_mut().for_each(|x| *x = *x * a);
     }
 
-    fn dot(&self, v: &Vector::<K>) -> K {
+    pub fn dot(&self, v: &Vector::<K>) -> K {
         if self.values.len() != v.values.len() {
             panic!("Vectors must be the same length");
         }
