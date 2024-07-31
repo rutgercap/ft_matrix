@@ -49,6 +49,17 @@ where
     }
 }
 
+impl Matrix<f32> {
+    pub fn lerp(u: Matrix<f32>, v: Matrix<f32>, t: f32) -> Matrix<f32> {
+        let mut result = u.clone();
+        result.scl(1.0 - t);
+        let mut v = v.clone();
+        v.scl(t);
+        result.add(&v);
+        result
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

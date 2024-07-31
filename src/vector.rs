@@ -13,6 +13,17 @@ impl<K: Numeric> Vector<K> {
     }
 }
 
+impl Vector<f32> {
+    pub fn lerp(u: Vector<f32>, v: Vector<f32>, t: f32) -> Vector<f32> {
+        let mut result = u.clone();
+        result.scl(1.0 - t);
+        let mut v = v.clone();
+        v.scl(t);
+        result.add(&v);
+        result
+    }
+}
+
 impl<K> Vector<K>
 where
     K: Numeric,
