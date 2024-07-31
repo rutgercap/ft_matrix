@@ -1,10 +1,11 @@
+use crate::numeric::Numeric;
 
 #[derive(Clone, Debug, PartialEq)]
-pub struct Vector<K> {
+pub struct Vector<K: Numeric> {
     pub values: Vec<K>,
 }
 
-impl<K: Clone> Vector<K> {
+impl<K: Numeric> Vector<K> {
     pub fn from(values: &[K]) -> Self {
         Vector { values: Vec::from(values) }
     }
@@ -12,7 +13,7 @@ impl<K: Clone> Vector<K> {
 
 impl<K> Vector<K>
 where
-    K: std::ops::Sub<Output = K>+ std::ops::Add<Output = K> + std::ops::Mul<Output = K> + PartialEq + Copy,
+    K: Numeric,
 {
     pub fn add(&mut self, v: &Vector<K>) {
         if self.values.len() != v.values.len() {

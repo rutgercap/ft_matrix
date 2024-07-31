@@ -1,9 +1,11 @@
+use crate::numeric::Numeric;
+
 #[derive(Clone, Debug, PartialEq)]
-pub struct Matrix<K> {
+pub struct Matrix<K: Numeric> {
     pub values: Vec<Vec<K>>,
 }
 
-impl<K: Clone> Matrix<K> {
+impl<K: Numeric> Matrix<K> {
     pub fn from(values: &[&[K]]) -> Self {
         let matrix_values: Vec<Vec<K>> = values.iter().map(|row| row.to_vec()).collect();
         Matrix { values: matrix_values }
@@ -12,11 +14,7 @@ impl<K: Clone> Matrix<K> {
 
 impl<K> Matrix<K>
 where
-    K: std::ops::Sub<Output = K>
-        + std::ops::Add<Output = K>
-        + std::ops::Mul<Output = K>
-        + PartialEq
-        + Copy,
+    K: Numeric,
 {
     fn add(&mut self, v: &Matrix<K>) {
         if self.values.len() != v.values.len() {
