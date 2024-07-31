@@ -7,7 +7,9 @@ pub struct Vector<K: Numeric> {
 
 impl<K: Numeric> Vector<K> {
     pub fn from(values: &[K]) -> Self {
-        Vector { values: Vec::from(values) }
+        Vector {
+            values: Vec::from(values),
+        }
     }
 }
 
@@ -19,14 +21,20 @@ where
         if self.values.len() != v.values.len() {
             panic!("Vectors must be the same length");
         }
-        self.values.iter_mut().zip(v.values.iter()).for_each(|(x, y)| *x = *x + *y);
+        self.values
+            .iter_mut()
+            .zip(v.values.iter())
+            .for_each(|(x, y)| *x = *x + *y);
     }
 
     pub fn sub(&mut self, v: &Vector<K>) {
         if self.values.len() != v.values.len() {
             panic!("Vectors must be the same length");
         }
-        self.values.iter_mut().zip(v.values.iter()).for_each(|(x, y)| *x = *x - *y);
+        self.values
+            .iter_mut()
+            .zip(v.values.iter())
+            .for_each(|(x, y)| *x = *x - *y);
     }
 
     pub fn scl(&mut self, a: K) {
@@ -40,15 +48,21 @@ mod tests {
 
     #[test]
     fn scale_properly_scales_a_vector() {
-        let mut v = Vector { values: vec![1, 2, 3] };
+        let mut v = Vector {
+            values: vec![1, 2, 3],
+        };
         v.scl(2);
         assert_eq!(v.values, vec![2, 4, 6]);
     }
 
     #[test]
     fn add_properly_adds_two_vectors() {
-        let mut v = Vector { values: vec![1, 2, 3] };
-        let v2 = Vector { values: vec![1, 2, 3] };
+        let mut v = Vector {
+            values: vec![1, 2, 3],
+        };
+        let v2 = Vector {
+            values: vec![1, 2, 3],
+        };
         v.add(&v2);
         assert_eq!(v.values, vec![2, 4, 6]);
     }
@@ -56,15 +70,21 @@ mod tests {
     #[test]
     #[should_panic]
     fn add_panics_if_vectors_are_not_same_length() {
-        let mut v = Vector { values: vec![1, 2, 3] };
+        let mut v = Vector {
+            values: vec![1, 2, 3],
+        };
         let v2 = Vector { values: vec![1, 2] };
         v.add(&v2);
     }
 
     #[test]
     fn sub_properly_subtracts_two_vectors() {
-        let mut v = Vector { values: vec![3, 6, 9] };
-        let v2 = Vector { values: vec![1, 2, 3] };
+        let mut v = Vector {
+            values: vec![3, 6, 9],
+        };
+        let v2 = Vector {
+            values: vec![1, 2, 3],
+        };
         v.sub(&v2);
         assert_eq!(v.values, vec![2, 4, 6]);
     }
@@ -72,7 +92,9 @@ mod tests {
     #[test]
     #[should_panic]
     fn sub_panics_if_vectors_are_not_same_length() {
-        let mut v = Vector { values: vec![1, 2, 3] };
+        let mut v = Vector {
+            values: vec![1, 2, 3],
+        };
         let v2 = Vector { values: vec![1, 2] };
         v.sub(&v2);
     }

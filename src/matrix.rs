@@ -8,7 +8,9 @@ pub struct Matrix<K: Numeric> {
 impl<K: Numeric> Matrix<K> {
     pub fn from(values: &[&[K]]) -> Self {
         let matrix_values: Vec<Vec<K>> = values.iter().map(|row| row.to_vec()).collect();
-        Matrix { values: matrix_values }
+        Matrix {
+            values: matrix_values,
+        }
     }
 }
 

@@ -1,7 +1,8 @@
-pub mod matrix;
-pub mod vector;
 pub mod linear_combinations;
+pub mod linear_interpolation;
+pub mod matrix;
 pub mod numeric;
+pub mod vector;
 
 fn main() {
     let v = vector::Vector {

@@ -4,15 +4,23 @@ pub fn linear_combination<K: Numeric>(u: &[Vector<K>], coefs: &[K]) -> Vector<K>
     if u.len() != coefs.len() {
         panic!("Need same number of vectors and coefficients");
     }
-    u.iter().zip(coefs.iter()).map(|(v, c)| {
-        let mut copy = v.clone();
-        copy.scl(*c);
-        copy
-    }).fold(Vector { values: vec![K::default(); u[0].values.len()] }, |acc, x| {
-        let mut copy = acc.clone();
-        copy.add(&x);
-        copy
-    })
+    u.iter()
+        .zip(coefs.iter())
+        .map(|(v, c)| {
+            let mut copy = v.clone();
+            copy.scl(*c);
+            copy
+        })
+        .fold(
+            Vector {
+                values: vec![K::default(); u[0].values.len()],
+            },
+            |acc, x| {
+                let mut copy = acc.clone();
+                copy.add(&x);
+                copy
+            },
+        )
 }
 
 #[cfg(test)]
@@ -21,9 +29,15 @@ mod tests {
 
     #[test]
     fn linear_combination_works() {
-        let v1 = Vector { values: vec![1, 2, 3] };
-        let v2 = Vector { values: vec![4, 5, 6] };
-        let v3 = Vector { values: vec![7, 8, 9] };
+        let v1 = Vector {
+            values: vec![1, 2, 3],
+        };
+        let v2 = Vector {
+            values: vec![4, 5, 6],
+        };
+        let v3 = Vector {
+            values: vec![7, 8, 9],
+        };
 
         let result = linear_combination(&[v1, v2, v3], &[1, 2, 3]);
 
