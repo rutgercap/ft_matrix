@@ -6,6 +6,7 @@ pub mod cos;
 pub mod cross_product;
 pub mod matrix_multiplication;
 pub mod trace;
+pub mod transpose;
 pub mod linear_interpolation;
 pub mod matrix;
 pub mod numeric;
