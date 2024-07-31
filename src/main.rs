@@ -3,6 +3,7 @@ use vector::Vector;
 pub mod linear_combinations;
 pub mod norm;
 pub mod cos;
+pub mod cross_product;
 pub mod linear_interpolation;
 pub mod matrix;
 pub mod numeric;
