@@ -1,9 +1,10 @@
-use num::Zero;
+use num::{One, Zero};
 pub trait Numeric:
     Copy
     + PartialOrd
     + PartialEq
     + Zero
+    + One
     + std::ops::Add<Output = Self>
     + std::ops::Sub<Output = Self>
     + std::ops::Mul<Output = Self>
@@ -13,6 +14,7 @@ pub trait Numeric:
     + std::ops::SubAssign
     + std::ops::DivAssign
     + Default
+    + std::fmt::Debug
 {
     fn abs(self) -> Self;
 }
@@ -23,6 +25,7 @@ where
         + PartialOrd
         + PartialEq
         + Zero
+        + One
         + std::ops::Add<Output = Self>
         + std::ops::Sub<Output = Self>
         + std::ops::Mul<Output = Self>
@@ -31,7 +34,8 @@ where
         + std::ops::AddAssign
         + std::ops::SubAssign
         + std::ops::DivAssign
-        + Default,
+        + Default
+        + std::fmt::Debug,
 {
     fn abs(self) -> Self {
         if self < Self::zero() {

@@ -37,6 +37,39 @@ impl<K: Numeric> Matrix<K> {
             }
             self.values.swap(i, r);
 
+            // Make all entries below the leading entry zero
+            for i in (r + 1)..rows {
+                let factor = self.values[i][lead];
+                if factor != K::zero() {
+                    self.subtract_multiple_of_row(r, i, factor);
+                }
+            }
+            lead += 1;
+        }
+    }
+
+    pub fn reduced_row_echelon(&mut self) {
+        let rows = self.values.len();
+        let cols = if rows > 0 { self.values[0].len() } else { 0 };
+
+        let mut lead = 0;
+        for r in 0..rows {
+            if lead >= cols {
+                break;
+            }
+            let mut i = r;
+            while self.values[i][lead] == K::zero() {
+                i += 1;
+                if i == rows {
+                    i = r;
+                    lead += 1;
+                    if lead == cols {
+                        return;
+                    }
+                }
+            }
+            self.values.swap(i, r);
+
             let leading_value = self.values[r][lead];
             self.divide_row(r, leading_value);
             for i in 0..rows {
@@ -63,9 +96,21 @@ mod tests {
     }
 
     #[test]
+    fn reduced_row_echelon_and_row_echelon_give_different_results() {
+        let mut rr = Matrix::from(&[&[2., 0., 0.], &[0., 2., 0.], &[0., 0., 2.]]);
+        let mut r = rr.clone();
+        rr.reduced_row_echelon();
+        r.row_echelon();
+        let expected = Matrix::from(&[&[1., 0., 0.], &[0., 1., 0.], &[0., 0., 1.]]);
+        assert_eq!(rr, expected);
+        let expected = Matrix::from(&[&[2., 0., 0.], &[0., 2., 0.], &[0., 0., 2.]]);
+        assert_eq!(r, expected);
+    }
+
+    #[test]
     fn row_echelon_works_2() {
         let mut m = Matrix::from(&[&[1., 2.], &[3., 4.]]);
-        m.row_echelon();
+        m.reduced_row_echelon();
         let expected = Matrix::from(&[&[1., 0.], &[0., 1.]]);
         assert_eq!(m, expected);
     }
@@ -85,7 +130,7 @@ mod tests {
             &[4., 2.5, 20., 4., -4.],
             &[8., 5., 1., 4., 17.],
         ]);
-        m.row_echelon();
+        m.reduced_row_echelon();
         let expected = Matrix::from(&[
             &[1.0, 0.625, 0.0, 0.0, -12.166666666666668],
             &[0.0, 0.0, 1.0, 0.0, -3.666666666666667],

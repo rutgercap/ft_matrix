@@ -2,6 +2,7 @@ use vector::Vector;
 
 pub mod cos;
 pub mod cross_product;
+pub mod determinant;
 pub mod linear_combinations;
 pub mod linear_interpolation;
 pub mod matrix;
