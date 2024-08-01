@@ -8,6 +8,7 @@ pub mod linear_interpolation;
 pub mod matrix;
 pub mod matrix_multiplication;
 pub mod norm;
+pub mod inverse;
 pub mod numeric;
 pub mod row_echelon_form;
 pub mod trace;

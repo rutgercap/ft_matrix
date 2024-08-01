@@ -8,14 +8,21 @@ impl<K: Numeric> Matrix<K> {
         self.values[row].iter_mut().for_each(|x| *x = *x / divisor);
     }
 
-    fn subtract_multiple_of_row(&mut self, source_row: usize, target_row: usize, factor: K) {
+    pub fn scale_row(&mut self, row: usize, factor: K) {
+        if factor == K::zero() {
+            panic!("Division by zero in row operation");
+        }
+        self.values[row].iter_mut().for_each(|x| *x = *x * factor);
+    }
+
+    pub fn subtract_multiple_of_row(&mut self, source_row: usize, target_row: usize, factor: K) {
         let source_row_clone = self.values[source_row].clone();
         for (i, x) in self.values[target_row].iter_mut().enumerate() {
             *x = *x - factor * source_row_clone[i];
         }
     }
 
-    pub fn row_echelon(&mut self) {
+    pub fn row_echelon(mut self) -> Self {
         let rows = self.values.len();
         let cols = if rows > 0 { self.values[0].len() } else { 0 };
         let mut pivot_row  = 0;
@@ -41,9 +48,10 @@ impl<K: Numeric> Matrix<K> {
             }
             pivot_row += 1;
         }
+        self
     }
 
-    pub fn reduced_row_echelon(&mut self) {
+    pub fn reduced_row_echelon(mut self) -> Self {
         let rows = self.values.len();
         let cols = if rows > 0 { self.values[0].len() } else { 0 };
 
@@ -59,7 +67,7 @@ impl<K: Numeric> Matrix<K> {
                     i = r;
                     lead += 1;
                     if lead == cols {
-                        return;
+                        return self;
                     }
                 }
             }
@@ -75,6 +83,7 @@ impl<K: Numeric> Matrix<K> {
             }
             lead += 1;
         }
+        self
     }
 }
 
@@ -84,18 +93,24 @@ mod tests {
 
     #[test]
     fn row_echelon_works() {
-        let mut m = Matrix::from(&[&[1., 0., 0.], &[0., 1., 0.], &[0., 0., 1.]]);
-        m.row_echelon();
+        let m = Matrix::from(&[&[1., 0., 0.], &[0., 1., 0.], &[0., 0., 1.]]).row_echelon();
         let expected = Matrix::from(&[&[1., 0., 0.], &[0., 1., 0.], &[0., 0., 1.]]);
+        assert_eq!(m, expected);
+    }
+
+    #[test]
+    fn reduced_row_echelon_again() {
+        let mut m = Matrix::from(&[&[1., 2., 3.], &[4., 5., 6.], &[7., 8., 9.]]);
+        m = m.reduced_row_echelon();
+        let expected = Matrix::from(&[&[1., 0., -1.], &[0., 1., 2.], &[0., 0., 0.]]);
         assert_eq!(m, expected);
     }
 
     #[test]
     fn reduced_row_echelon_and_row_echelon_give_different_results() {
         let mut rr = Matrix::from(&[&[2., 0., 0.], &[0., 2., 0.], &[0., 0., 2.]]);
-        let mut r = rr.clone();
-        rr.reduced_row_echelon();
-        r.row_echelon();
+        let r = rr.clone().row_echelon();
+        rr = rr.reduced_row_echelon();
         let expected = Matrix::from(&[&[1., 0., 0.], &[0., 1., 0.], &[0., 0., 1.]]);
         assert_eq!(rr, expected);
         let expected = Matrix::from(&[&[2., 0., 0.], &[0., 2., 0.], &[0., 0., 2.]]);
@@ -105,27 +120,25 @@ mod tests {
     #[test]
     fn row_echelon_works_2() {
         let mut m = Matrix::from(&[&[1., 2.], &[3., 4.]]);
-        m.reduced_row_echelon();
+        m = m.reduced_row_echelon();
         let expected = Matrix::from(&[&[1., 0.], &[0., 1.]]);
         assert_eq!(m, expected);
     }
 
     #[test]
     fn row_echelon_works_3() {
-        let mut m = Matrix::from(&[&[1., 2.], &[2., 4.]]);
-        m.row_echelon();
+        let m = Matrix::from(&[&[1., 2.], &[2., 4.]]).row_echelon();
         let expected = Matrix::from(&[&[1., 2.], &[0., 0.]]);
         assert_eq!(m, expected);
     }
 
     #[test]
     fn row_echelon_works_4() {
-        let mut m = Matrix::from(&[
+        let m = Matrix::from(&[
             &[8., 5., -2., 4., 28.],
             &[4., 2.5, 20., 4., -4.],
             &[8., 5., 1., 4., 17.],
-        ]);
-        m.reduced_row_echelon();
+        ]).reduced_row_echelon();
         let expected = Matrix::from(&[
             &[1.0, 0.625, 0.0, 0.0, -12.166666666666668],
             &[0.0, 0.0, 1.0, 0.0, -3.666666666666667],
