@@ -18,33 +18,28 @@ impl<K: Numeric> Matrix<K> {
     pub fn row_echelon(&mut self) {
         let rows = self.values.len();
         let cols = if rows > 0 { self.values[0].len() } else { 0 };
+        let mut pivot_row  = 0;
 
-        let mut lead = 0;
-        for r in 0..rows {
-            if lead >= cols {
-                break;
-            }
-            let mut i = r;
-            while self.values[i][lead] == K::zero() {
-                i += 1;
-                if i == rows {
-                    i = r;
-                    lead += 1;
-                    if lead == cols {
-                        return;
-                    }
+        for i in 0..rows {
+            let mut j = 0;
+            while self.values[pivot_row][j] == K::zero() {
+                j += 1;
+                if j == cols {
+                    break;
                 }
             }
-            self.values.swap(i, r);
-
-            // Make all entries below the leading entry zero
-            for i in (r + 1)..rows {
-                let factor = self.values[i][lead];
-                if factor != K::zero() {
-                    self.subtract_multiple_of_row(r, i, factor);
-                }
+            if j == cols {
+                pivot_row += 1;
+                continue;
             }
-            lead += 1;
+            if pivot_row != i {
+                self.values.swap(pivot_row, i);
+            }
+            for k in i + 1..rows {
+                let leading_value = self.values[k][j];
+                self.subtract_multiple_of_row(i, k, leading_value);
+            }
+            pivot_row += 1;
         }
     }
 
