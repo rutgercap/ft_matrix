@@ -2,7 +2,7 @@ use num::Float;
 
 use crate::{numeric::Numeric, vector::Vector};
 
-pub fn angle_cos<K: Numeric + Float>(u: &Vector::<K>, v: &Vector::<K>) -> K {
+pub fn angle_cos<K: Numeric + Float>(u: &Vector<K>, v: &Vector<K>) -> K {
     let dot = u.dot(v);
     dot / (v.norm_2() * v.norm_2())
 }

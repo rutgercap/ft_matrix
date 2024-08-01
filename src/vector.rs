@@ -52,11 +52,14 @@ where
         self.values.iter_mut().for_each(|x| *x = *x * a);
     }
 
-    pub fn dot(&self, v: &Vector::<K>) -> K {
+    pub fn dot(&self, v: &Vector<K>) -> K {
         if self.values.len() != v.values.len() {
             panic!("Vectors must be the same length");
         }
-        self.values.iter().zip(v.values.iter()).fold(K::zero(), |acc, (x, y)| acc + *x * *y)
+        self.values
+            .iter()
+            .zip(v.values.iter())
+            .fold(K::zero(), |acc, (x, y)| acc + *x * *y)
     }
 }
 
@@ -135,7 +138,7 @@ mod tests {
         let v2 = Vector {
             values: vec![1., 1.],
         };
-        
+
         assert_eq!(v.dot(&v2), 0.);
     }
 
@@ -147,7 +150,7 @@ mod tests {
         let v2 = Vector {
             values: vec![1., 1.],
         };
-        
+
         assert_eq!(v.dot(&v2), 2.);
     }
 
@@ -159,8 +162,7 @@ mod tests {
         let v2 = Vector {
             values: vec![3., 2.],
         };
-        
+
         assert_eq!(v.dot(&v2), 9.);
     }
-
 }

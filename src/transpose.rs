@@ -14,7 +14,7 @@ impl<K: Numeric> Matrix<K> {
     }
 }
 
-#[cfg(test)]    
+#[cfg(test)]
 mod tests {
     use super::*;
 

@@ -11,6 +11,7 @@ pub trait Numeric:
     + std::ops::Neg<Output = Self>
     + std::ops::AddAssign
     + std::ops::SubAssign
+    + std::ops::DivAssign
     + Default
 {
     fn abs(self) -> Self;
@@ -29,6 +30,7 @@ where
         + std::ops::Neg<Output = Self>
         + std::ops::AddAssign
         + std::ops::SubAssign
+        + std::ops::DivAssign
         + Default,
 {
     fn abs(self) -> Self {

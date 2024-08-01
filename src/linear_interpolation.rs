@@ -2,7 +2,6 @@ use std::ops::{Add, Mul, Sub};
 
 use crate::numeric::Numeric;
 
-
 trait Lerp<V: Numeric> {
     fn lerp(u: V, v: V, t: f32) -> V;
 }

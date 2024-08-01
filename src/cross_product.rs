@@ -1,6 +1,6 @@
 use crate::{numeric::Numeric, vector::Vector};
 
-fn cross_product<K: Numeric>(u: &Vector::<K>, v: &Vector::<K>) -> Vector::<K> {
+fn cross_product<K: Numeric>(u: &Vector<K>, v: &Vector<K>) -> Vector<K> {
     if u.values.len() != 3 || v.values.len() != 3 {
         panic!("Cross product is only defined for vectors of length 3");
     }

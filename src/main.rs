@@ -1,16 +1,16 @@
 use vector::Vector;
 
-pub mod linear_combinations;
-pub mod norm;
 pub mod cos;
 pub mod cross_product;
-pub mod matrix_multiplication;
-pub mod trace;
-pub mod row_echelon_form;
-pub mod transpose;
+pub mod linear_combinations;
 pub mod linear_interpolation;
 pub mod matrix;
+pub mod matrix_multiplication;
+pub mod norm;
 pub mod numeric;
+pub mod row_echelon_form;
+pub mod trace;
+pub mod transpose;
 pub mod vector;
 
 fn main() {
@@ -45,7 +45,7 @@ fn main() {
         values: vec![10., 10., 10.],
     };
 
-    let t = 0.5; 
+    let t = 0.5;
 
     let lerped = Vector::lerp(start, end, t);
 
