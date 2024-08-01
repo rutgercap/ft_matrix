@@ -3,21 +3,18 @@ use num::Float;
 use crate::{numeric::Numeric, vector::Vector};
 
 impl<V: Numeric> Vector<V> {
-    pub fn norm_1(&self) -> V {
-        self.values.iter().fold(V::zero(), |acc, x| acc + x.abs())
+    pub fn norm_1(&self) -> f64 {
+        self.values.iter().fold(0., |acc, x| acc + x.magnitude())
     }
 
-    pub fn norm_inf(&self) -> V {
-        self.values.iter().fold(
-            V::zero(),
-            |acc, x| {
-                if x.abs() > acc {
-                    x.abs()
-                } else {
-                    acc
-                }
-            },
-        )
+    pub fn norm_inf(&self) -> f64 {
+        self.values.iter().fold(0., |acc, x| {
+            if x.magnitude() > acc {
+                x.magnitude()
+            } else {
+                acc
+            }
+        })
     }
 }
 

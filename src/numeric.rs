@@ -11,12 +11,9 @@ pub trait Numeric:
     + std::ops::Div<Output = Self>
     + std::ops::Neg<Output = Self>
     + std::ops::AddAssign
-    + std::ops::SubAssign
-    + std::ops::DivAssign
-    + Default
     + std::fmt::Debug
 {
-    fn abs(self) -> Self;
+    fn magnitude(self) -> f64;
 }
 
 impl<T> Numeric for T
@@ -32,16 +29,15 @@ where
         + std::ops::Div<Output = Self>
         + std::ops::Neg<Output = Self>
         + std::ops::AddAssign
-        + std::ops::SubAssign
         + std::ops::DivAssign
-        + Default
-        + std::fmt::Debug,
+        + std::fmt::Debug
+        + Into<f64>,
 {
-    fn abs(self) -> Self {
+    fn magnitude(self) -> f64 {
         if self < Self::zero() {
-            -self
+            (-self).into()
         } else {
-            self
+            self.into()
         }
     }
 }

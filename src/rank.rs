@@ -16,7 +16,7 @@ mod tests {
 
     #[test]
     fn test_rank() {
-        let mut m = Matrix {
+        let m = Matrix {
             values: vec![vec![1, 2, 3], vec![4, 5, 6], vec![7, 8, 9]],
         };
 

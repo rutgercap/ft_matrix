@@ -1,16 +1,17 @@
 use vector::Vector;
 
+pub mod complex_number;
 pub mod cos;
 pub mod cross_product;
 pub mod determinant;
+pub mod inverse;
 pub mod linear_combinations;
 pub mod linear_interpolation;
 pub mod matrix;
 pub mod matrix_multiplication;
 pub mod norm;
-pub mod inverse;
-pub mod rank;
 pub mod numeric;
+pub mod rank;
 pub mod row_echelon_form;
 pub mod trace;
 pub mod transpose;

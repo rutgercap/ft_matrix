@@ -13,7 +13,7 @@ pub fn linear_combination<K: Numeric>(u: &[Vector<K>], coefs: &[K]) -> Vector<K>
         })
         .fold(
             Vector {
-                values: vec![K::default(); u[0].values.len()],
+                values: vec![K::zero(); u[0].values.len()],
             },
             |acc, x| {
                 let mut copy = acc.clone();
