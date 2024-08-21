@@ -11,6 +11,13 @@ fn cross_product<K: Numeric>(u: &Vector<K>, v: &Vector<K>) -> Vector<K> {
     result
 }
 
+impl<K: Numeric> Vector<K> {
+    pub fn cross_product(&self, other: &Vector<K>) -> Vector<K> {
+        cross_product(self, other)
+    }
+}
+
+
 #[cfg(test)]
 mod tests {
     use super::*;

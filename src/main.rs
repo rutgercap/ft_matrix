@@ -54,4 +54,13 @@ fn main() {
     let lerped = Vector::lerp(start, end, t);
 
     println!("Lerped Vector: {:?}", lerped);
+
+
+    let v3 = vector::Vector {
+        values: vec![7, 8, 9],
+    };
+
+    let cross_product = v1.cross_product(&v3);
+
+    println!("Cross product: {:?}", cross_product);
 }
